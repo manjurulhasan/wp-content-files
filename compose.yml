@@ -1,0 +1,19 @@
+services:
+  app:
+    image: seliseretail/wpcontentfiles:latest
+    container_name: wpcontentfiles
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - wpcontentfiles:/var/www/html
+    env_file:
+      - .env
+  nginx:
+    image: nginx:1.24.0-alpine-slim
+    container_name: nginx
+    ports:
+      - "8089:80"
+    volumes:
+      - wpcontentfiles:/var/www/html
+      - ./conf.d:/etc/nginx/conf.d
+volumes:
+  wpcontentfiles:
